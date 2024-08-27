@@ -3,14 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\JWTAuthTrait;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids, JWTAuthTrait;
 
+    public $incrementing = false;
+    protected $primaryKey = "uuid";
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'uuid'
     ];
 
     /**
@@ -32,6 +38,19 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+//    protected static function boot()
+//    {
+//        parent::boot();
+//
+//        static::creating(function ($model) {
+//            if (empty($model->uuid)) {
+//                $model->uuid = (string)Str::uuid();
+//            }
+//        });
+//    }
+
+    // Automatically generate a UUID when creating a new user
+
     /**
      * Get the attributes that should be cast.
      *
@@ -42,6 +61,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'uuid' => 'string',
         ];
     }
 }
