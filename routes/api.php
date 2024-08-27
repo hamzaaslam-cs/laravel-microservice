@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,25 +21,7 @@ Route::group([
 
 Route::middleware('api')->get("test",function(){
 
-//    $admin = User::create([
-//        'name' => 'admin',
-//        'email' => "admin@example.com",
-//        'password' => bcrypt("12345678"),
-//    ]);
-
-    $admin=User::where("email","admin@example.com")->first();
-
-    $adminRole = Role::whereName(\App\Enums\Role::ADMIN->value)->first();
-
-
-//
-    $admin->assignRole($adminRole);
-
-    return $admin;
-//    $role = \App\Models\Role::whereName(\App\Enums\Role::ADMIN->value)->first();
-//
-//    $permissions = \App\Models\Permission::get();
-//
-//    $role->syncPermissions($permissions);
-//    return $permissions;
+   return  Permission::where('name', 'like', '%user%')
+        ->orWhere('name', 'like', '%product%')
+        ->get()->pluck('name', 'id');
 });

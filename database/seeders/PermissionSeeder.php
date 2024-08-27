@@ -251,9 +251,24 @@ class PermissionSeeder extends Seeder
         }
 
 
-        $role = \App\Models\Role::whereName(\App\Enums\Role::ADMIN->value)->first();
+        $admin = \App\Models\Role::whereName(\App\Enums\Role::ADMIN->value)->first();
         $permissions = \App\Models\Permission::pluck('name', 'id');
-        $role->givePermissionTo($permissions);
+        $admin->givePermissionTo($permissions);
+
+
+
+        $manager = \App\Models\Role::whereName(\App\Enums\Role::MANAGER->value)->first();
+        $permissions = \App\Models\Permission::where('name', 'like', '%user%')
+            ->orWhere('name', 'like', '%product%')
+            ->get()->pluck('name', 'id');
+        $manager->givePermissionTo($permissions);
+
+
+        $user = \App\Models\Role::whereName(\App\Enums\Role::USER->value)->first();
+        $permissions = \App\Models\Permission::where('name', 'like', '%product%')
+            ->get()->pluck('name', 'id');
+        $user->givePermissionTo($permissions);
+
 
     }
 }
