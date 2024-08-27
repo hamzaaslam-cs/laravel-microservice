@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+
+use App\Http\Requests\Auth\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,18 +17,8 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function register(): JsonResponse
+    public function register(RegistrationRequest $request): JsonResponse
     {
-        $validator = Validator::make(request()->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:8',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
         $user = new User;
         $user->name = request()->name;
         $user->email = request()->email;
@@ -41,9 +34,9 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function login()
+    public function login(LoginRequest $request)
     {
-        $credentials = request(['email', 'password']);
+        $credentials = $request->validated();
 
         if (!$token = auth("api")->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
