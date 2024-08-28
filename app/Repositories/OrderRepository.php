@@ -20,7 +20,7 @@ class OrderRepository
 
     public function all()
     {
-        $orders = new Order();
+        $orders = Order::with('user:id,name','product:id,name');
 
         if (auth()->user()->hasRole(Role::MANAGER->value)) {
             $orders->where(function ($query) {

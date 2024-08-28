@@ -11,7 +11,18 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'product_id',
+        'quantity',
+        'status',
+        'total_cost'
+    ];
+
+    protected $hidden = [
+        'updated_at',
+        'deleted_at',
+    ];
 
     public function user(): BelongsTo
     {
