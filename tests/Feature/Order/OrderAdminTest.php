@@ -1,14 +1,13 @@
 <?php
 
 use App\Enums\Role;
-use App\Models\Product;
 use App\Models\User;
 use Database\Seeders\DefaultUsersSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\ProductsSeeder;
 use Database\Seeders\RolesSeeder;
 
-test('crud operations on products by admin', function () {
+test('crud operations on order by admin', function () {
 
     $this->seed(RolesSeeder::class);
     $this->seed(PermissionSeeder::class);
@@ -19,19 +18,18 @@ test('crud operations on products by admin', function () {
 
     // Act: Log in the user using the 'api' guard
 
-
-    ($this->actingAs($adminRole, 'api')->get('/products'))->assertStatus(200);
-    ($this->actingAs($adminRole, 'api')->post('/products', [
-        'name' => 'product test',
-        'quantity' => 1,
-        'price' => 10,
+    ($this->actingAs($adminRole, 'api')->post('/api/orders', [
+        'user_id' => 3,
+        'product_id' => 1,
+        "quantity" => 2,
+        "total_cost" => 100
+    ]))->assertStatus(200);
+    ($this->actingAs($adminRole, 'api')->get('/api/products'))->assertStatus(200);
+    ($this->actingAs($adminRole, 'api')->put('/api/orders/1', [
         'status' => 1,
     ]))->assertStatus(200);
-    ($this->actingAs($adminRole, 'api')->put('/products/1', [
-        'status' => 1,
-    ]))->assertStatus(200);
-    ($this->actingAs($adminRole, 'api')->get('/products/1'))->assertStatus(200);
-    ($this->actingAs($adminRole, 'api')->delete('/products/1'))->assertStatus(200);
+    ($this->actingAs($adminRole, 'api')->get('/api/orders/1'))->assertStatus(200);
+    ($this->actingAs($adminRole, 'api')->delete('/api/orders/1'))->assertStatus(200);
 
 });
 
