@@ -94,7 +94,7 @@ it('test permission seeder', function () {
         'destroy-order'
     ]))->toBeTrue()
         ->and($managerRole->hasAllPermissions([
-            'list-user', 'view-user', 'create-user', 'edit-user', 'delete-user', 'index-user', 'show-user', 'store-user', 'update-user', 'destroy-user', 'list-product', 'view-product', 'create-product', 'edit-product', 'delete-product', 'index-product', 'show-product', 'store-product', 'update-product', 'destroy-product', 'list-order', 'view-order', 'create-order', 'edit-order', 'delete-order', 'index-order', 'show-order', 'store-order', 'update-order', 'destroy-order'
+            'list-user', 'view-user', 'create-user', 'edit-user', 'delete-user', 'index-user', 'show-user', 'store-user', 'update-user', 'destroy-user', 'list-product', 'view-product', 'create-product', 'edit-product', 'show-product', 'store-product', 'update-product', 'list-order', 'view-order', 'create-order', 'edit-order', 'delete-order', 'index-order', 'show-order', 'store-order', 'update-order', 'destroy-order'
         ]))->toBeTrue()
         ->and($userRole->hasAllPermissions([
             'list-product', 'show-product', 'list-order', 'view-order', 'create-order', 'edit-order', 'delete-order', 'index-order', 'show-order', 'store-order', 'update-order', 'destroy-order'
