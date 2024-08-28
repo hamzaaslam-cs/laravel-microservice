@@ -25,6 +25,7 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
+
         Gate::authorize('create', User::class);
 
         $data = $request->validated();

@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -28,6 +29,11 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
+        if (auth()->user()->hasRole(Role::ADMIN->value) && request()->role === Role::ADMIN->value) {
+            return false;
+        } elseif (auth()->user()->hasRole(Role::MANAGER->value) && request()->role === Role::MANAGER->value) {
+            return false;
+        }
         return $user->can('create-user');
     }
 

@@ -26,7 +26,6 @@ Route::middleware('api')->group(function () {
         Route::apiResource('orders', OrderController::class);
         Route::apiResource('users', UserController::class);
 
-
     });
 
 
