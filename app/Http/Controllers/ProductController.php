@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Gate;
 class ProductController extends Controller
 {
     use GeneralTrait;
+
     public function __construct(public ProductRepository $productRepository)
     {
 
@@ -53,10 +54,10 @@ class ProductController extends Controller
     {
         Gate::authorize('create', Product::class);
         $product = $this->productRepository->store($request->validated());
-        if($this->isWebGuard()){
+        if ($this->isWebGuard()) {
             return redirect()->route('products.index');
-        }else{
-            return response()->json(['message' => "Product created successfully", "data" => $product]);
+        } else {
+            return response()->json(['message' => __('product.created'), "data" => $product]);
         }
 
     }
@@ -68,7 +69,7 @@ class ProductController extends Controller
     {
         Gate::authorize('view', $product);
 
-        return $this->isWebGuard()?view('products.view', compact('product')):response()->json(['data' => $product]);
+        return $this->isWebGuard() ? view('products.view', compact('product')) : response()->json(['data' => $product]);
 
     }
 
@@ -94,7 +95,7 @@ class ProductController extends Controller
         if ($this->isWebGuard()) {
             return redirect()->route('products.index');
         } else {
-            return response()->json(['message' => "Product updated successfully", "data" => $product]);
+            return response()->json(['message' => __('product.updated'), "data" => $product]);
         }
 
     }
@@ -106,7 +107,7 @@ class ProductController extends Controller
     {
         Gate::authorize('delete', $product);
         $this->productRepository->delete($product->id);
-        return response()->json(['message' => "Product deleted successfully"]);
+        return response()->json(['message' => __('product.deleted')]);
 
     }
 }

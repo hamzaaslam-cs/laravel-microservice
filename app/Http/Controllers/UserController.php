@@ -30,7 +30,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['password'] = Str::password(8);
         $user = $this->userRepository->store($data);
-        return response()->json(['message' => "User created successfully", "data" => $user]);
+        return response()->json(['message' => __('user.created'), "data" => $user]);
     }
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse
@@ -38,14 +38,14 @@ class UserController extends Controller
         Gate::authorize('update', $user);
         $this->userRepository->update($user->id, $request->validated());
         $user = $this->userRepository->find($user->id);
-        return response()->json(['message' => "User updated successfully", "data" => $user]);
+        return response()->json(['message' => __('user.updated'), "data" => $user]);
     }
 
     public function destroy(User $user): JsonResponse
     {
         Gate::authorize('delete', $user);
         $this->userRepository->delete($user->id);
-        return response()->json(['message' => "User deleted successfully"]);
+        return response()->json(['message' => __('user.deleted')]);
     }
 
     public function show(User $user)
