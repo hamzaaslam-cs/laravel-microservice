@@ -11,6 +11,6 @@ class Permission extends permissionModal
     use HasFactory;
 
     protected $guarded = [];
-    protected $guard_name = '*';
+    protected string $guard_name = '*';
 
 }

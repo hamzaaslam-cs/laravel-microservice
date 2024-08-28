@@ -17,7 +17,7 @@ class Role extends roleModal
     ];
 
     protected $guarded = [];
-    protected $guard_name = '*';
+    protected string $guard_name = '*';
 
 
 }

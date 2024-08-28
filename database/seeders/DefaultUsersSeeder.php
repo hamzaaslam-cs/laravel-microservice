@@ -2,11 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Permission;
 use App\Models\Role;
-use App\Models\Role as CustomRole;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DefaultUsersSeeder extends Seeder
@@ -25,6 +22,26 @@ class DefaultUsersSeeder extends Seeder
         $adminRole = Role::whereName(\App\Enums\Role::ADMIN->value)->first();
 
         $admin->assignRole($adminRole);
+
+        $manager = User::create([
+            'name' => 'manager',
+            'email' => "manager@example.com",
+            'password' => bcrypt("12345678"),
+        ]);
+
+        $managerRole = Role::whereName(\App\Enums\Role::MANAGER->value)->first();
+
+        $manager->assignRole($managerRole);
+
+        $user = User::create([
+            'name' => 'user',
+            'email' => "user@example.com",
+            'password' => bcrypt("12345678"),
+        ]);
+
+        $userRole = Role::whereName(\App\Enums\Role::USER->value)->first();
+
+        $user->assignRole($userRole);
 
     }
 }
