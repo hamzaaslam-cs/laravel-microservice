@@ -22,9 +22,9 @@ Route::middleware('api')->group(function () {
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
-        Route::resource('products', ProductController::class);
-        Route::resource('orders', OrderController::class);
-        Route::resource('users', UserController::class);
+        Route::apiResource('products', ProductController::class);
+        Route::apiResource('orders', OrderController::class);
+        Route::apiResource('users', UserController::class);
 
 
     });

@@ -31,6 +31,7 @@ class StoreProductRequest extends FormRequest
             'name' => ['required', 'string', 'unique:' . User::class],
             'quantity' => ['required', 'numeric'],
             'status' => ['sometimes', new Enum(ProductStatus::class)],
+            'price' => ['sometimes', 'numeric'],
         ];
     }
 }
