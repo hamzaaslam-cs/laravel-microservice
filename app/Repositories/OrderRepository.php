@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\Role;
 use App\Models\Order;
 
 class OrderRepository
@@ -19,7 +20,20 @@ class OrderRepository
 
     public function all()
     {
-        return Order::all();
+        $orders = new Order();
+
+        if (auth()->user()->hasRole(Role::MANAGER->value)) {
+            $orders->where(function ($query) {
+                $query->whereHas("user.roles", function ($q) {
+                    $q->whereIn("roles.name", [Role::USER->value]);
+                });
+                $query->orWhere("user_id", auth()->user()->id);
+            });
+        } elseif (auth()->user()->hasRole(Role::USER->value)) {
+            $orders = $orders->where("user_id", auth()->user()->id);
+        }
+
+        return $orders->get();
     }
 
     public function update($id, array $attributes)
