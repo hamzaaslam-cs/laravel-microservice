@@ -27,8 +27,6 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['sometimes', 'exists:App\Models\User,id'],
-            'product_id' => ['sometimes', 'exists:App\Models\Product,id'],
             'quantity' => ['sometimes', 'numeric', "gte:1"],
             'status' => ['sometimes', new Enum(OrderStatus::class)],
             'total_cost' => ['sometimes', 'numeric', "gte:1"],
