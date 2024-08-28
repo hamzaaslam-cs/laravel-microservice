@@ -56,7 +56,7 @@ class ProductController extends Controller
         if($this->isWebGuard()){
             return redirect()->route('products.index');
         }else{
-            return response()->json(['message' => "Product created successfully", "data" => $product]);;
+            return response()->json(['message' => "Product created successfully", "data" => $product]);
         }
 
     }
