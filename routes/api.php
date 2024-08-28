@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\Permission;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -16,8 +18,16 @@ Route::middleware('api')->group(function () {
         Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
     });
 
+    Route::group([
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::resource('products', ProductController::class);
+        Route::resource('orders', OrderController::class);
+
+    });
+
 
     Route::get('test', function () {
-        return \App\Models\Order::with(['user','product'])->where("user_id",3)->get();
+        return Order::with(['user', 'product'])->where("user_id", 3)->get();
     });
 });
