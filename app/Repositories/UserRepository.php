@@ -15,11 +15,18 @@ class UserRepository
 
     public function store(array $attributes)
     {
-        return User::create([
+        $user = User::create([
             'name' => $attributes['name'],
             'email' => $attributes['email'],
             'password' => bcrypt($attributes['password'])
         ]);
+
+        if (!empty($attributes["role"])) {
+            $user->assignRole($attributes["role"]);
+        } else {
+            $user->assignRole(Role::USER->value);
+        }
+        return $user;
     }
 
 
