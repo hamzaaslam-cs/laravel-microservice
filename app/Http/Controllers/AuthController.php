@@ -24,7 +24,7 @@ class AuthController extends Controller
     public function register(RegistrationRequest $request): JsonResponse
     {
         $user = $this->userRepository->store($request->validated());
-        return response()->json($user, 201);
+        return response()->json($user, 200);
     }
 
 
