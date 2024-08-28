@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
+use App\Models\Order;
 use App\Repositories\OrderRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -19,6 +20,8 @@ class OrderController extends Controller
      */
     public function index(): JsonResponse
     {
+        Gate::authorize('viewAny', Order::class);
+
         $orders = $this->orderRepository->all();
 
         return response()->json(['data' => $orders]);
@@ -37,6 +40,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request): JsonResponse
     {
+        Gate::authorize('create', Order::class);
         $order = $this->orderRepository->store($request->validated());
         return response()->json(['message' => "Order created successfully", "data" => $order]);
 
@@ -45,9 +49,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): JsonResponse
+    public function show(Order $order): JsonResponse
     {
-        $order = $this->orderRepository->find($id);
+        Gate::authorize('view', $order);
+        $order = $this->orderRepository->find($order->id);
         return response()->json(['data' => $order]);
     }
 
@@ -62,10 +67,11 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, string $id): JsonResponse
+    public function update(UpdateOrderRequest $request, Order $order): JsonResponse
     {
-        $this->orderRepository->update($id, $request->validated());
-        $order = $this->orderRepository->find($id);
+        Gate::authorize('update', $order);
+        $this->orderRepository->update($order->id, $request->validated());
+        $order = $this->orderRepository->find($order->id);
         return response()->json(['message' => "Order updated successfully", "data" => $order]);
 
     }
@@ -73,9 +79,10 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): JsonResponse
+    public function destroy(Order $order): JsonResponse
     {
-        $this->orderRepository->delete($id);
+        Gate::authorize('delete', $order);
+        $this->orderRepository->delete($order->id);
         return response()->json(['message' => "Order deleted successfully"]);
 
     }

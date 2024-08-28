@@ -243,6 +243,49 @@ class PermissionSeeder extends Seeder
                 'guard_name' => '*',
             ],
 
+            /********************   Order    **********************/
+            [
+                'name' => Str::kebab("ListOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("ViewOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("CreateOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("EditOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("DeleteOrder"),
+                'guard_name' => '*',
+            ],
+
+            [
+                'name' => Str::kebab("IndexOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("ShowOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("StoreOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("UpdateOrder"),
+                'guard_name' => '*',
+            ],
+            [
+                'name' => Str::kebab("DestroyOrder"),
+                'guard_name' => '*',
+            ],
+
 
         ];
 
@@ -256,16 +299,17 @@ class PermissionSeeder extends Seeder
         $admin->givePermissionTo($permissions);
 
 
-
         $manager = \App\Models\Role::whereName(\App\Enums\Role::MANAGER->value)->first();
         $permissions = \App\Models\Permission::where('name', 'like', '%user%')
             ->orWhere('name', 'like', '%product%')
+            ->orWhere('name', 'like', '%order%')
             ->get()->pluck('name', 'id');
         $manager->givePermissionTo($permissions);
 
 
         $user = \App\Models\Role::whereName(\App\Enums\Role::USER->value)->first();
         $permissions = \App\Models\Permission::where('name', 'like', '%product%')
+            ->orWhere('name', 'like', '%order%')
             ->get()->pluck('name', 'id');
         $user->givePermissionTo($permissions);
 

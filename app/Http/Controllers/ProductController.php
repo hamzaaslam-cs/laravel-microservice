@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Models\Product;
 use App\Repositories\ProductRepository;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -18,8 +20,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Product::class);
         $products = $this->productRepository->all();
-
         return response()->json(['data' => $products]);
     }
 
@@ -36,6 +38,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        Gate::authorize('create', Product::class);
         $product = $this->productRepository->store($request->validated());
         return response()->json(['message' => "Product created successfully", "data" => $product]);
     }
@@ -43,9 +46,9 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        $product = $this->productRepository->find($id);
+        Gate::authorize('view', $product);
         return response()->json(['data' => $product]);
     }
 
@@ -60,19 +63,21 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $this->productRepository->update($id, $request->validated());
-        $product = $this->productRepository->find($id);
+        Gate::authorize('update', $product);
+        $this->productRepository->update($product->id, $request->validated());
+        $product = $this->productRepository->find($product->id);
         return response()->json(['message' => "Product updated successfully", "data" => $product]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        $this->productRepository->delete($id);
+        Gate::authorize('delete', $product);
+        $this->productRepository->delete($$product->id);
         return response()->json(['message' => "Product deleted successfully"]);
 
     }
