@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,8 +15,10 @@ class OrderSeeder extends Seeder
      */
     public function run(): void
     {
-         Order::create(['user_id' =>3,'product_id' => 1,'quantity' => 2,]);
-         Order::create(['user_id' =>3,'product_id' => 2,'quantity' => 2,]);
-         Order::create(['user_id' =>3,'product_id' => 3,'quantity' => 2,]);
+        $product1=Product::find(1);
+        $product2=Product::find(2);
+
+         Order::create(['user_id' =>3,'product_id' => $product1->id,'quantity' =>$product1->price*2,]);
+         Order::create(['user_id' =>3,'product_id' => $product2->id,'quantity' => $product2->price*2,]);
     }
 }
