@@ -26,9 +26,16 @@ class ProductsDataTable extends DataTable
                 $editButton = '<a href="' . route('products.edit', $product->id) . '" class="btn btn-sm btn-primary">Edit</a>';
                 $showButton = '<a href="' . route('products.show', $product->id) . '" class="btn btn-sm btn-primary">Show</a>';
                 $deleteButton = '<button class="btn btn-sm btn-danger delete-product" data-id="' . $product->id . '">Delete</button>';
-                return $editButton . ' ' . $deleteButton.' '.$showButton;
+                return $editButton . ' ' . $deleteButton . ' ' . $showButton;
+            })
+            ->editColumn('created_at', function ($product) {
+                return $product->created_at->format('Y-m-d H:i:s');
+            })
+            ->editColumn('updated_at', function ($product) {
+                return $product->updated_at->format('Y-m-d H:i:s');
             })
             ->setRowId('id');
+
     }
 
     /**
