@@ -11,6 +11,12 @@ class OrderRepository
         return Order::find($id);
     }
 
+    public function store($attributes)
+    {
+        return Order::create($attributes);
+    }
+
+
     public function all()
     {
         return Order::all();

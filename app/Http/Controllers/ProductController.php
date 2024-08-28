@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Repositories\ProductRepository;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,7 @@ class ProductController extends Controller
     {
         $products = $this->productRepository->all();
 
-        return response()->json(['data'=>$products]);
+        return response()->json(['data' => $products]);
     }
 
     /**
@@ -33,9 +34,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product = $this->productRepository->store($request->validated());
+        return response()->json(['message' => "Product created successfully", "data" => $product]);
     }
 
     /**
@@ -43,7 +45,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = $this->productRepository->find($id);
+        return response()->json(['data' => $product]);
     }
 
     /**
@@ -57,9 +60,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
-        //
+        $this->productRepository->update($id, $request->validated());
+        $product = $this->productRepository->find($id);
+        return response()->json(['message' => "Product updated successfully", "data" => $product]);
     }
 
     /**
@@ -67,6 +72,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->productRepository->delete($id);
+        return response()->json(['message' => "Product deleted successfully"]);
+
     }
 }

@@ -16,6 +16,11 @@ class ProductRepository
         return Product::all();
     }
 
+    public function store($attributes)
+    {
+        return Product::create($attributes);
+    }
+
     public function update($id, array $attributes)
     {
         return Product::where("id", $id)->update($attributes);

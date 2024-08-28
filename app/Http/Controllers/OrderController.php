@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Order\StoreOrderRequest;
+use App\Http\Requests\Order\UpdateOrderRequest;
+use App\Repositories\OrderRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct(public OrderRepository $orderRepository)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $orders = $this->orderRepository->all();
+
+        return response()->json(['data' => $orders]);
     }
 
     /**
@@ -25,17 +35,20 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request): JsonResponse
     {
-        //
+        $order = $this->orderRepository->store($request->validated());
+        return response()->json(['message' => "Order created successfully", "data" => $order]);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        $order = $this->orderRepository->find($id);
+        return response()->json(['data' => $order]);
     }
 
     /**
@@ -49,16 +62,21 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOrderRequest $request, string $id): JsonResponse
     {
-        //
+        $this->orderRepository->update($id, $request->validated());
+        $order = $this->orderRepository->find($id);
+        return response()->json(['message' => "Order updated successfully", "data" => $order]);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        $this->orderRepository->delete($id);
+        return response()->json(['message' => "Order deleted successfully"]);
+
     }
 }
