@@ -301,11 +301,10 @@ class PermissionSeeder extends Seeder
 
         $manager = \App\Models\Role::whereName(\App\Enums\Role::MANAGER->value)->first();
         $permissions = \App\Models\Permission::where('name', 'like', '%user%')
-            ->orWhere('name', 'like', '%product%')
             ->orWhere('name', 'like', '%order%')
             ->get()->pluck('name', 'id');
 
-        $permissions[] = \App\Models\Permission::whereIn("name", ['list-product', 'show-product','add-product','store-product'])->get()->pluck('name', 'id');
+        $permissions[] = \App\Models\Permission::whereIn("name", ['list-product','view-product' ,'show-product','create-product','store-product','update-product','edit-product'])->get()->pluck('name', 'id');
         $manager->givePermissionTo($permissions);
 
 
@@ -313,7 +312,7 @@ class PermissionSeeder extends Seeder
         $permissions = \App\Models\Permission::where('name', 'like', '%order%')
             ->get()->pluck('name', 'id');
 
-        $permissions[] = \App\Models\Permission::whereIn("name", ['list-product', 'show-product'])->get()->pluck('name', 'id');
+        $permissions[] = \App\Models\Permission::whereIn("name", ['list-product', 'show-product','view-product'])->get()->pluck('name', 'id');
 
         $user->givePermissionTo($permissions);
 
