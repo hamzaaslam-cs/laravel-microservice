@@ -27,7 +27,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['sometimes', 'string', 'lowercase', 'email', 'max:255'],
             'role' => ['sometimes', Rule::in([Role::MANAGER, Role::USER])],
         ];
     }
