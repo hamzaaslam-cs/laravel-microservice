@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -15,7 +16,7 @@ Route::middleware('api')->group(function () {
         Route::post('/login', [AuthController::class, 'login'])->name('login');
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
         Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
-        Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+
     });
 
     Route::group([
@@ -23,6 +24,8 @@ Route::middleware('api')->group(function () {
     ], function () {
         Route::resource('products', ProductController::class);
         Route::resource('orders', OrderController::class);
+        Route::resource('users', UserController::class);
+
 
     });
 

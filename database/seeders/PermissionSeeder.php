@@ -311,6 +311,9 @@ class PermissionSeeder extends Seeder
         $permissions = \App\Models\Permission::where('name', 'like', '%product%')
             ->orWhere('name', 'like', '%order%')
             ->get()->pluck('name', 'id');
+
+//        $permissions[] = \App\Models\Permission::whereIn("name", ['update-user', 'list-user', 'show-user'])->get()->pluck('name', 'id');
+
         $user->givePermissionTo($permissions);
 
 

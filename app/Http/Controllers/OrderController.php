@@ -21,9 +21,7 @@ class OrderController extends Controller
     public function index(): JsonResponse
     {
         Gate::authorize('viewAny', Order::class);
-
         $orders = $this->orderRepository->all();
-
         return response()->json(['data' => $orders]);
     }
 
@@ -43,7 +41,6 @@ class OrderController extends Controller
         Gate::authorize('create', Order::class);
         $order = $this->orderRepository->store($request->validated());
         return response()->json(['message' => "Order created successfully", "data" => $order]);
-
     }
 
     /**
@@ -73,7 +70,6 @@ class OrderController extends Controller
         $this->orderRepository->update($order->id, $request->validated());
         $order = $this->orderRepository->find($order->id);
         return response()->json(['message' => "Order updated successfully", "data" => $order]);
-
     }
 
     /**
@@ -84,6 +80,5 @@ class OrderController extends Controller
         Gate::authorize('delete', $order);
         $this->orderRepository->delete($order->id);
         return response()->json(['message' => "Order deleted successfully"]);
-
     }
 }

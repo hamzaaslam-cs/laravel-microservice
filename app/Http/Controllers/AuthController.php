@@ -5,26 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 
 use App\Http\Requests\Auth\RegistrationRequest;
-use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+
 
 class AuthController extends Controller
 {
+    public function __construct(public UserRepository $userRepository)
+    {
+    }
+
     /**
      * Register a User.
      *
+     * @param RegistrationRequest $request
      * @return JsonResponse
      */
     public function register(RegistrationRequest $request): JsonResponse
     {
-        $user = new User;
-        $user->name = request()->name;
-        $user->email = request()->email;
-        $user->password = bcrypt(request()->password);
-        $user->save();
-
+        $user = $this->userRepository->store($request->validated());
         return response()->json($user, 201);
     }
 
@@ -32,16 +31,15 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
+     * @param LoginRequest $request
      * @return JsonResponse
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $credentials = $request->validated();
-
         if (!$token = auth("api")->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->respondWithToken($token);
     }
 
@@ -52,23 +50,13 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    protected function respondWithToken($token): JsonResponse
+    protected function respondWithToken(string $token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth("api")->factory()->getTTL() * 60
         ]);
-    }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return JsonResponse
-     */
-    public function me(): JsonResponse
-    {
-        return response()->json(auth("api")->user());
     }
 
     /**
