@@ -1,7 +1,7 @@
 
 # laravel-microservice
 
-It provider JWT authentication for APIs and session base authentication for portal
+It provides JWT authentication for APIs and session base authentication for portal
 
 
 ## Authors
