@@ -64,16 +64,29 @@ To host vite server:
   npm run dev 
 ```
 
-To host api server:
-
-```bash
-  php artisan serve 
-```
 
 To Run tests :
 
 ```bash
   php artisan test 
+```
+
+To Run Database Migrations :
+
+```bash
+  php artisan migrate 
+```
+
+To Run Database Seeder :
+
+```bash
+  php artisan db:seed 
+```
+
+To host server:
+
+```bash
+  php artisan serve 
 ```
 
 ## API Reference
