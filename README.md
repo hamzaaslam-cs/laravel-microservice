@@ -167,6 +167,8 @@ https://github.com/hamzaaslam-cs/laravel-microservice/blob/main/Laravel%20Micros
 
 #### Env
 
+```bash
+
 APP_NAME=Laravel-Microservice
 APP_ENV=local
 APP_KEY=base64:gh7eQrxf1jrTGkdAzIhVtAuNHJ/MxzojiNPn4OL2Aec=
@@ -238,5 +240,5 @@ JWT_SECRET=K5BZ6S2nteaoREWrsqcKRsQKYuoeJcPmRjl4fh1S7bTIaP4GxGWNJJBMoCZ0eyja
 
 JWT_ALGO=HS256
 
-
+```
 
