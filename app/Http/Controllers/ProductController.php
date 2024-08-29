@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ProductsDataTable;
+use App\Filters\ProductFilters;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
@@ -25,7 +26,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ProductFilters $filters)
     {
         Gate::authorize('viewAny', Product::class);
 
@@ -33,7 +34,7 @@ class ProductController extends Controller
             return app(ProductsDataTable::class)->render('products.index');
         }
 
-        $products = $this->productRepository->all();
+        $products = $this->productRepository->all($filters);
         return response()->json(['data' => $products]);
     }
 

@@ -11,9 +11,9 @@ class ProductRepository
         return Product::find($id);
     }
 
-    public function all()
+    public function all($filters = null)
     {
-        return Product::all();
+        return Product::filter($filters)->get();
     }
 
     public function store($attributes)
