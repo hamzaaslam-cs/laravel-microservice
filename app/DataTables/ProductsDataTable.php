@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Filters\ProductFilters;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -43,7 +44,11 @@ class ProductsDataTable extends DataTable
      */
     public function query(Product $model): QueryBuilder
     {
-        return $model->newQuery();
+//        return $model->newQuery();
+
+        $productFilters = new ProductFilters(request());
+
+        return $model->filter($productFilters)->newQuery();
     }
 
     /**
