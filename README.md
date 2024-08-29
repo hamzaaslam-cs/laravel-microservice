@@ -3,6 +3,7 @@
 
 It provider JWT authentication for APIs and session base authentication for portal
 
+
 ## Authors
 
 - [@hamzaaslam](https://github.com/hamzaaslam-cs)
@@ -25,6 +26,8 @@ Follow these steps to set up the project on your local machine.
 
 ```bash
 git clone [https://github.com/your-repo/laravel-project.git](https://github.com/hamzaaslam-cs/laravel-microservice.git)
+```
+```bash
 cd laravel-microservice
 ```
 ### 2. Configure Env
