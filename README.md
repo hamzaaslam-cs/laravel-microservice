@@ -163,6 +163,8 @@ Accept : application/json
 
 For all apis docs import Laravel Microservice.postman_collection.json file in postman.
 
+https://github.com/hamzaaslam-cs/laravel-microservice/blob/main/Laravel%20Microservice.postman_collection.json
+
 
 
 
