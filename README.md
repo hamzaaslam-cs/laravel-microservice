@@ -29,17 +29,19 @@ cd laravel-microservice
 ```
 ### 2. Configure Env
  You can use.
+
+ ```bash
 #DB_CONNECTION=sqlite
-
+```
 OR
-
+```bash
  DB_CONNECTION=mysql
  DB_HOST=127.0.0.1
  DB_PORT=3306
  DB_DATABASE=laravel-microservice
  DB_USERNAME=root
  DB_PASSWORD=password
-
+```
 Install composer dependencies:
 
 ```bash
