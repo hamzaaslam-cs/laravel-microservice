@@ -45,6 +45,12 @@ OR
  DB_USERNAME=root
  DB_PASSWORD=password
 ```
+Copy Env
+
+```bash
+  cp .\.env.example .env
+```
+
 Install composer dependencies:
 
 ```bash
