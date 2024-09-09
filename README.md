@@ -69,7 +69,33 @@ To host vite server:
 ```bash
   npm run dev 
 ```
+If facing this error "Cannot find module @rollup/rollup-win32-x64-msvc"
+Follow below steps :
 
+1. Delete node_modules and package-lock.json
+
+```bash
+  rm -rf node_modules package-lock.json
+```
+2. Reinstall Dependencies
+
+```bash
+  npm install
+```
+
+3. Check Rollup Version
+```bash
+  npm install --save-dev rollup
+```
+4. Clear NPM Cache
+```bash
+  npm cache clean --force
+```
+
+5. Clear NPM Cache
+```bash
+  npm run build
+```
 
 To Run tests :
 
