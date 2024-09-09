@@ -14,4 +14,14 @@
             </div>
         </div>
     </div>
+
 </x-app-layout>
+
+@role(App\Enums\Role::ADMIN)
+<a
+    href="{{ url('/products') }}"
+
+>
+    Products
+</a>
+@endrole

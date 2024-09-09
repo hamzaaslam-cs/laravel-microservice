@@ -57,6 +57,12 @@ Install node dependencies:
   npm install
 ```
 
+Generate key:
+
+```bash
+  php artisan key:generate
+```
+
 
 To host vite server:
 
